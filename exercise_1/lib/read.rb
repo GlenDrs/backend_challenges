@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-require_relative '../data/input'
+require 'json'
 
 class Read
   def read_json
+    JSON.parse(File.read file_json)
   end
 
   private
