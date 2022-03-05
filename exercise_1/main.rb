@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require_relative './lib/output_json_hash'
-require_relative 'lib/read'
+require_relative './lib/output_hash'
 
-p  OutputJsonHash.new.print_json
+p OutputHash.new.print_hash
