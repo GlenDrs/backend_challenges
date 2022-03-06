@@ -5,14 +5,14 @@ require_relative 'read'
 class Operate
   def compute_array
     compt_array = []
-    (0..(cars.length - 1)).map do |index|
+    (0..(cars.length - 1)).each do |i|
       compt_array <<
       [
-        cars[index]['price_per_day'],
-        nb_days(index),
-        cars[index]['price_per_km'],
-        rentals[index]['distance'],
-        rentals[index]['id']
+        cars[i]['price_per_day'],
+        nb_days(i),
+        cars[i]['price_per_km'],
+        rentals[i]['distance'],
+        rentals[i]['id']
       ]
     end
     compt_array
@@ -24,12 +24,12 @@ class Operate
     (end_date(index) - start_date(index) + 1).to_i
   end
 
-  def start_date(index)
-    end_date = Date.strptime(rentals[index]['start_date'], '%Y-%m-%d')
-  end
-
   def end_date(index)
     start_date = Date.strptime(rentals[index]['end_date'], '%Y-%m-%d')
+  end
+
+  def start_date(index)
+    end_date = Date.strptime(rentals[index]['start_date'], '%Y-%m-%d')
   end
 
   def cars

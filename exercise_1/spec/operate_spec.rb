@@ -2,14 +2,12 @@
 require_relative '../lib/operate'
 
 RSpec.describe Operate do
-  subject(:rental_cost) { described_class.new}
+  subject(:rental_cost) { described_class.new }
+  subject(:compute_values) {[[2000, 3, 10, 100, 1], [1700, 3, 8, 150, 3]]}
   describe '#compute_array' do
-    it 'Testing creation array with variables' do
+    it 'Testing the arrays results' do
       expect(rental_cost.compute_array).to include
-      [
-        [1, 2000, 3, 10, 100], [2, 1700, 3, 8, 150]
-      ]
+      compute_values
     end
   end
-
 end
