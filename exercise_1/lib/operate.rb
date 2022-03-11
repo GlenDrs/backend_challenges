@@ -19,7 +19,6 @@ class Operate
   end
 
   private
-
   def nb_days(index)
     (end_date(index) - start_date(index) + 1).to_i
   end
