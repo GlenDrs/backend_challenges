@@ -8,7 +8,15 @@ class ReadOperate
     (0..(cars2.length - 1)).each do |i|
       compt_array <<
       [
-        cars2[i]['price_per_day'],
+        if count_days(i) > 0 && count_days(i) < 4
+          ( cars2[i]['price_per_day'] * 0.9 ).to_i
+        elsif count_days(i) > 4 && count_days(i) < 10
+          ( cars2[i]['price_per_day'] * 0.7 ).to_i
+        elsif count_days(i) > 10
+          ( cars2[i]['price_per_day'] * 0.5).to_i
+        else
+          (cars2[i]['price_per_day']).to_i
+        end,
         count_days(i),
         cars2[i]['price_per_km'],
         rentals2[i]['distance'],
