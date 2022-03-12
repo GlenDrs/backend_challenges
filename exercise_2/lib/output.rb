@@ -13,6 +13,9 @@ class Output
     }
   end
 
+  def call
+    call_array
+  end
 
   private
   def rental_prices2
