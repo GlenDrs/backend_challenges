@@ -9,7 +9,6 @@ class ReadOperate
       compt_array <<
       [
         promo_price[i],
-        count_days(i),
         cars2.first['price_per_km'],
         rentals2[i]['distance'],
         rentals2[i]['id']
@@ -25,7 +24,7 @@ class ReadOperate
       if count_days(i) < 4
         (x * (0.9 * i) + x).to_i
       elsif count_days(i) > 10
-        x * (1 + 0.1 * 3 + 0.7 * 6 + (count_days(i) - 10)).to_i
+        (x * (1 + 0.9 * 3 + 0.7 * 6 + ((count_days(i) - 10)* 0.5))).round
       end
     end
   end
