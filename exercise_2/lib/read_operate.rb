@@ -8,16 +8,7 @@ class ReadOperate
     (0..(rentals2.length - 1)).each do |i|
       compt_array <<
       [
-        case
-        when count_days(i) > 1 && count_days(i) < 5
-          (cars2.first['price_per_day'] * 0.9).to_i
-        when count_days(i) > 4 && count_days(i) < 10
-          (cars2.first['price_per_day'] * 0.7).to_i
-        when count_days(i) > 10
-          (cars2.first['price_per_day'] * 0.5).to_i
-        else
-          cars2.first['price_per_day'].to_i
-        end,
+        promo_price[i],
         count_days(i),
         cars2.first['price_per_km'],
         rentals2[i]['distance'],
@@ -27,17 +18,6 @@ class ReadOperate
     compt_array
   end
 
-  def promo_price
-    x = cars2.first['price_per_day']
-    (0..(rentals2.length - 1)).map do |i|
-      if count_days(i) < 4
-        (x * (0.9 * i) + x).to_i
-      elsif count_days(i) > 10
-        (x + x * ((0.9 * 3 ) + ( 0.7 * 6) + (0.5 * (i - 10)))).to_i
-      end
-    end
-  end
-
   private
   def promo_price
     x = cars2.first['price_per_day']
@@ -45,7 +25,7 @@ class ReadOperate
       if count_days(i) < 4
         (x * (0.9 * i) + x).to_i
       elsif count_days(i) > 10
-        (x + x * ((0.9 * 3 ) + ( 0.7 * 6) + (0.5 * (i - 10)))).to_i
+        x * (1 + 0.1 * 3 + 0.7 * 6 + (count_days(i) - 10)).to_i
       end
     end
   end
