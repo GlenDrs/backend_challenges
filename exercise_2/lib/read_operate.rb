@@ -5,13 +5,11 @@ require 'date'
 class ReadOperate
   def compute_array
     compt_array = []
-    (0..(rentals2.length - 1)).each do |i|
+    (0..(rentals2.length - 1)).map do |i|
       compt_array <<
       [
-        promo_price[i],
-        cars2.first['price_per_km'],
-        rentals2[i]['distance'],
-        rentals2[i]['id']
+        promo_price[i], cars2.first['price_per_km'],
+        rentals2[i]['distance'], rentals2[i]['id']
       ]
     end
     compt_array
