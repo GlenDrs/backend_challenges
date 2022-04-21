@@ -7,7 +7,6 @@ class Read
   end
 
   private
-
   def file_json
     './data/input.json'
   end
