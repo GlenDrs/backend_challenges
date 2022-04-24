@@ -5,6 +5,13 @@ require_relative 'read'
 class Operate
 
 
+  def final_price
+    rentals3.map.with_index do |price_km,i|
+      price_km["distance"] * cars3.first["price_per_km"] + promo_price[i]
+    end
+  end
+
+  private
   def promo_price
     x = cars3.first['price_per_day']
     (0..(rentals3.length - 1)).map do |i|
@@ -16,7 +23,6 @@ class Operate
     end
   end
 
-  private
   def count_days(index)
     (last_day(index) - first_day(index) + 1).to_i
   end
@@ -30,7 +36,7 @@ class Operate
   end
 
   def cars3
-    p Read.new.call['cars']
+    Read.new.call['cars']
   end
 
   def rentals3
