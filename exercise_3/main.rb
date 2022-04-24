@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-require_relative './lib/operate'
+require 'date'
+require_relative './lib/operate_commission'
 
-p Operate.new.final_price
-
+  p OperateCommission.new.drivy_fee
 

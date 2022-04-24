@@ -4,7 +4,7 @@ require 'date'
 
 class Read
   def call
-  read_json_3
+    read_json_3
   end
 
   private
