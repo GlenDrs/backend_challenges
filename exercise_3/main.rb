@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'date'
-require_relative './lib/operate_commission'
+require_relative './lib/output'
 
-  p OperateCommission.new.commission_h
-
+  p Output.new.ouput_rentals

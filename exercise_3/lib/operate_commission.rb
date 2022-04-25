@@ -5,10 +5,12 @@ require_relative './operate'
 
 class OperateCommission
   def commission_h
-    {"commission"=> {"insurance_fee"=> insurance_fee,
-      "assistance_fee"=> assistance_fee,
-      "drivy_fee"=> drivy_fee
-    }}
+    (0..2).map do |i|
+      {"insurance_fee"=> insurance_fee[i],
+        "assistance_fee"=> assistance_fee[i],
+        "drivy_fee"=> drivy_fee[i]
+      }
+    end
   end
 
   private
@@ -36,7 +38,6 @@ class OperateCommission
       [day['end_date'], day['start_date']]
     end
   end
-
 
   def insurance_fee
     call_final_prices.map do |final_price|
