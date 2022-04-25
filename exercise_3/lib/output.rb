@@ -4,7 +4,7 @@ require_relative './operate'
 
 class Output
 
-  def ouput_rentals
+  def output_rentals
     {"rentals" => gather_rentals}
   end
 
