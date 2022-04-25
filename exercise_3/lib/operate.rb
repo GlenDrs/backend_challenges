@@ -4,7 +4,6 @@ require_relative 'read'
 
 class Operate
 
-
   def final_price
     rentals3.map.with_index do |price_km,i|
       price_km["distance"] * cars3.first["price_per_km"] + promo_price[i]
