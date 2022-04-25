@@ -4,12 +4,18 @@ require_relative './read'
 require_relative './operate'
 
 class OperateCommission
+  def commission_h
+    {"commission"=> {"insurance_fee"=> insurance_fee,
+      "assistance_fee"=> assistance_fee,
+      "drivy_fee"=> drivy_fee
+    }}
+  end
 
-  #private
+  private
   def drivy_fee
     l = assistance_fee.length - 1
     (0..l).map do |i|
-      inssurance_fee[i] - assistance_fee[i]
+      insurance_fee[i] - assistance_fee[i]
     end
   end
 
@@ -32,7 +38,7 @@ class OperateCommission
   end
 
 
-  def inssurance_fee
+  def insurance_fee
     call_final_prices.map do |final_price|
       ((final_price * 0.3) * 0.5).to_i
     end
