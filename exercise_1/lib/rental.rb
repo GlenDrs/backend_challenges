@@ -1,15 +1,14 @@
-require 'read'
-require 'date'
+class Rental
+  attr_reader :id, :car_id, :start_date, :end_date, :distance
 
-attr_reader :id, :car_id, :start_date, :end_date, :distance
-
-  def initialize(id, car_id, start_date, end_date, distance)
+  def initialize(id:, car_id:, start_date:, end_date:, distance:)
     @id = id
     @car_id = car_id
     @start_date = start_date
     @end_date = end_date
+    @distance = distance
 
-    validate_inputs_rental
+    #validate_inputs_rental
   end
 
   def nb_days
