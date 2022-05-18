@@ -31,7 +31,6 @@ class Operate
   def combined_data
     result = []
     rentals_data.each do |rental|
-      #result.push(rental.merge(price_from_cars(rental['car_id'])))
       result.push((price_from_cars(rental['car_id'])).merge(rental))
     end
     result
