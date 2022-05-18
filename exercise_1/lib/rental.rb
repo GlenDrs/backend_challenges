@@ -12,7 +12,7 @@ class Rental
   end
 
   def nb_days
-    (date_from_string(end_date) - date_from_string(end_date)).to_i + 1
+    (date_from_string(end_date) - date_from_string(start_date)).to_i + 1
   end
 
 

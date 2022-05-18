@@ -13,23 +13,45 @@ class Operate
     @cars = []
     @rentals = []
 
-    #create_cars
-    #create_rentals
+    cars_data
+    rentals_data
   end
 
-  def show_cars
-    p create_rentals
+  def prices
+    price_total = []
+    combined_data.each do |combined|
+      fix_price_day = combined['price_per_day'] * nb_days(combined['start_date'], combined['end_date'])
+      price_per_km = combined['price_per_km'] * combined['distance']
+      price_total << {id: combined['id'], price: price_per_km + fix_price_day }
+    end
+    {rentals: price_total}
   end
 
   private
+  def combined_data
+    result = []
+    rentals_data.each do |rental|
+      #result.push(rental.merge(price_from_cars(rental['car_id'])))
+      result.push((price_from_cars(rental['car_id'])).merge(rental))
+    end
+    result
+  end
 
-  def create_cars
+  def price_from_cars(id)
+    cars_data.detect {|car| car['id'] == id }
+  end
+
+  def price_from_rentals(car_id)
+    rentals_data.detect {|rental| rental['car_id'] == car_id }
+  end
+
+  def cars_data
     data['cars'].each do |car|
       cars << car_call(car)
     end
   end
 
-  def create_rentals
+  def rentals_data
     data['rentals'].each do |rental|
       rentals << rental_call(rental)
     end
@@ -53,50 +75,11 @@ class Operate
     )
   end
 
-  def data
-    Read.new.read_json
+  def nb_days(start_date, end_date)
+    (date_from_string(end_date) - date_from_string(start_date) +1 ).to_i
   end
 
-=begin
-  def compute_array
-    compt_array = []
-    (0..(cars.length - 1)).each do |i|
-      compt_array <<
-      [
-        cars[i]['price_per_day'],
-        nb_days(i),
-        cars[i]['price_per_km'],
-        rentals[i]['distance'],
-        rentals[i]['id']
-      ]
-    end
-    compt_array
+  def date_from_string(string_date)
+    Date.strptime(string_date, '%Y-%m-%d')
   end
-
-  private
-
-  def nb_days(index)
-    (end_date(index) - start_date(index) + 1).to_i
-  end
-
-  def end_date(index)
-    start_date = Date.strptime(rentals[index]['end_date'], '%Y-%m-%d')
-  end
-
-  def start_date(index)
-    end_date = Date.strptime(rentals[index]['start_date'], '%Y-%m-%d')
-  end
-
-  def cars
-    call_data['cars']
-  end
-
-  def rentals
-    call_data['rentals']
-  end
-
-  def call_data
-    Read.new.read_json
-  end
-=end
 end

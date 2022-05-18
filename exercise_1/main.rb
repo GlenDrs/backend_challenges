@@ -7,4 +7,4 @@ require_relative './lib/operate'
 
 cars_rnts = Read.new.read_json
 
-Operate.new(cars_rnts).show_cars
+p Operate.new(cars_rnts).prices
