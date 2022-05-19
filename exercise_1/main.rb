@@ -5,7 +5,7 @@ require_relative './lib/operate'
 
 def execute
   cars_rnts = Read.new.read_json
-  Operate.new(cars_rnts).test
+  p Operate.new(cars_rnts).export
 end
 
 execute

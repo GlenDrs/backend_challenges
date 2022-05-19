@@ -15,30 +15,15 @@ class Operate
     rentals_data
   end
 
-=begin
-  def prices
-    price_total = []
-    combined_data.each do |combined|
-      fix_price_day = combined['price_per_day'] * nb_days(combined['start_date'], combined['end_date'])
-      price_per_km = combined['price_per_km'] * combined['distance']
-      price_total << {id: combined['id'], price: price_per_km + fix_price_day }
-    end
-    {rentals: price_total}
-  end
-
-  private
-  def combined_data
+  def export
     result = []
-    rentals_data.each do |rental|
-      result.push((price_from_cars(rental['car_id'])).merge(rental))
+    rentals.each do |rental|
+      used_cars = detect_cars(rental.car_id)
+      price_by_days = used_cars.price_per_day * rental.nb_days
+      total_price = (used_cars.price_per_km * rental.distance + price_by_days)
+      result.push(id: rental.id, price: total_price)
     end
-    result
-  end
-=end
-  def test
-    data['rentals'].each do |rent|
-      p price_from_cars(rent['car_id'])
-    end
+    {rentals: result}
   end
 
   private
@@ -56,37 +41,30 @@ class Operate
 
   def car_call(data)
     ::Car.new(
-      id: data[:id],
-      price_per_day: data[:price_per_day],
-      price_per_km: data[:price_per_km]
+      id: data['id'],
+      price_per_day: data['price_per_day'],
+      price_per_km: data['price_per_km']
     )
   end
 
   def rental_call(data)
     ::Rental.new(
-      id: data[:id],
-      car_id: data[:car_id],
-      start_date: data[:start_date],
-      end_date: data[:end_date],
-      distance: data[:distance]
+      id: data['id'],
+      car_id: data['car_id'],
+      start_date: data['start_date'],
+      end_date: data['end_date'],
+      distance: data['distance']
     )
   end
 
-  def price_from_cars(id)
+  def detect_cars(id)
     detected_car = cars.detect{|car| car.id == id }
     detected_car
   end
 
-  def price_from_rentals(car_id)
+  def detect_rentals(car_id)
     detected_rental = rentals.detect {|rental| rental.car_id == car_id }
     detected_rental
   end
 
-  def nb_days(start_date, end_date)
-    (date_from_string(end_date) - date_from_string(start_date) +1 ).to_i
-  end
-
-  def date_from_string(string_date)
-    Date.strptime(string_date, '%Y-%m-%d')
-  end
 end
