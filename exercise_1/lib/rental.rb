@@ -26,7 +26,7 @@ class Rental
   end
 
   def date_from_string(string_date)
-    DateTime.strptime(string_date, '%Y-%m-%d')
+    Date.strptime(string_date, '%Y-%m-%d')
   end
 
 end
