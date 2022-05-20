@@ -5,7 +5,7 @@ class Car
     @price_per_day = price_per_day
     @price_per_km = price_per_km
 
-    #validate_inputs_car
+    validate_inputs_car
   end
 
   private
