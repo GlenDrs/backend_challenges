@@ -1,4 +1,11 @@
 # frozen_string_literal: true
-require_relative './lib/output_hash'
+require 'date'
+require_relative './lib/read'
+require_relative './lib/operate'
 
-p OutputHash.new.print_hash
+def execute
+  cars_rnts = Read.new.read_json
+  p Operate.new(cars_rnts).export
+end
+
+execute
