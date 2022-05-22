@@ -3,6 +3,12 @@ require 'json'
 require 'date'
 
 class ReadOperate
+  attr_reader :data
+  attr_accessor :cars, :rentals
+  def initialize(data:)
+    @data = data
+  end
+
   def compute_array
     compt_array = []
     (0..(rentals2.length - 1)).map do |i|
