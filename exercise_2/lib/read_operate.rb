@@ -24,15 +24,19 @@ class ReadOperate
   private
   def adjusted_prices
     fixed_price = new_car_data.first.price_per_day
+    km_price = new_car_data.first.price_per_km
     new_rental.each do |rental|
       if rental.nb_days == 1
-        p fixed_price
+        p fixed_price + km_price * rental.distance
       elsif rental.nb_days < 4 && rental.nb_days > 1
-        p (fixed_price * 0.9 * (rental.nb_days - 1) + fixed_price).round
+        a = (fixed_price * 0.9 * (rental.nb_days - 1) + fixed_price).round
+        p a + km_price * rental.distance
       elsif rental.nb_days < 11 && rental.nb_days > 4
-        p (fixed_price * (1 + 0.9 * 3) + fixed_price * 0.7 * (rental.nb_days - 4)).round
+        b = (fixed_price * (1 + 0.9 * 3) + fixed_price * 0.7 * (rental.nb_days - 4)).round
+        p b + km_price * rental.distance
       elsif rental.nb_days > 10
-        p (fixed_price * (1 + 0.9 * 3 + 0.7 * 6 + ((rental.nb_days - 10)* 0.5))).round
+        c = (fixed_price * (1 + 0.9 * 3 + 0.7 * 6 + ((rental.nb_days - 10)* 0.5))).round
+        p c + km_price * rental.distance
       end
     end
   end
