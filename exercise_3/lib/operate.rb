@@ -3,6 +3,13 @@ require 'date'
 require_relative 'read'
 
 class Operate
+  attr_accessor :car, :rental
+  attr_reader :data
+  def initialize (data)
+    @data = data
+    @car = []
+    @rental = []
+  end
 
   def final_price
     rentals3.map.with_index do |price_km,i|

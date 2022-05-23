@@ -12,6 +12,10 @@ class Rental
     validate_inputs_rental
   end
 
+  def day_fee
+    100 * ((convert_to_date(end_date) - convert_to_date(start_date)).to_i + 1)
+  end
+
   def nb_days
     ((convert_to_date(end_date) - convert_to_date(start_date)).to_i + 1)
   end
