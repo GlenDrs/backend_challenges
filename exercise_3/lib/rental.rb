@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'date'
 
 class Rental
   attr_accessor :id, :car_id, :start_date, :end_date, :distance

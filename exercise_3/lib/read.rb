@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'json'
-require 'date'
 
 class Read
   def read_json_3
@@ -11,5 +10,4 @@ class Read
   def file_json
     './data/input.json'
   end
-
 end
