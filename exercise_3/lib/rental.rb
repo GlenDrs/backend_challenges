@@ -18,13 +18,13 @@ class Rental
   end
 
   def prices_primes
-    if nb_days == 1
+    if nb_days < 2
       nb_days
-    elsif nb_days < 4 && nb_days > 1
+    elsif nb_days > 1 && nb_days < 4
       nb_days + (nb_days -  1) * 0.9
     elsif nb_days < 11 && nb_days > 4
       nb_days * (1 + 0.9 * 3) + (nb_days - 4) * 0.7
-    else
+    elsif nb_days > 10
       nb_days * (1 + 0.9 * 3 + 0.7 * 7) +(nb_days - 10) * 0.5
     end
   end

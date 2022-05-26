@@ -14,46 +14,21 @@ class Operate
     rentals_data
   end
 
-  def final_price
-    rentals3.map.with_index do |price_km,i|
-      price_km["distance"] * cars3.first["price_per_km"] + promo_price[i]
-    end
-  end
-
-  def result1
+  def price_and_fees
     result = []
-    rentals.each_with_index do |rental, i|
-      result.push(id: rental.id, price: prices_total[i])
+    rentals.each do |rental|
+      car_var = detect_cars(rental.car_id)
+      price_tot = car_var.price_per_km * rental.distance + rental.prices_primes * (car_var.price_per_day * 200)
+      result.push(id: rental.id, price: price_tot.round, commission: {
+        insurance_fee: (price_tot * 0.15).round,
+        assistance_fee: rental.day_fee,
+        drivy_fee: (price_tot * 0.15).round - rental.day_fee 
+      })
     end
     {rentals: result}
   end
 
-  def prices_total
-    total_price = []
-    rentals.each_with_index do |rental, i|
-      car_var_intermed = detect_cars(rental.car_id)
-      total_price.push(car_var_intermed.price_per_km * rental.distance +  prices_primes[i])
-    end
-    p total_price
-  end
-
   private
-  def prices_primes
-    price_prime = []
-    rentals.each do |rental|
-      fixed_price = (detect_cars(rental.car_id).price_per_day * 200)
-      if rental.nb_days == 1
-        price_prime.push(fixed_price)
-      elsif rental.nb_days < 4 && rental.nb_days > 1
-        price_prime.push(fixed_price * 0.9 * (rental.nb_days - 1) + fixed_price)
-      elsif rental.nb_days < 11 && rental.nb_days > 4
-        price_prime.push(fixed_price * (1 + 0.9 * 3) + fixed_price * 0.7 * (rental.nb_days - 4))
-      elsif rental.nb_days > 10
-        price_prime.push(fixed_price * (1 + 0.9 * 3 + 0.7 * 6 + ((rental.nb_days - 10)* 0.5)))
-      end
-    end
-    price_prime.map {|price| price.round}
-  end
 
   def cars_data
     data['cars'].each do |car|
@@ -93,21 +68,6 @@ class Operate
   def detect_rentals(car_id)
     detected_rental = rentals.detect {|rental| rental.car_id == car_id }
     detected_rental
-  end
-
-
-=begin
-//////////////////
-=end
-  def promo_price
-    x = cars3.first['price_per_day']
-    (0..(rentals3.length - 1)).map do |i|
-      if count_days(i) < 4
-        (x * (0.9 * i) + x).to_i
-      elsif count_days(i) > 10
-        (x * (1 + 0.9 * 3 + 0.7 * 6 + ((count_days(i) - 10)* 0.5))).round
-      end
-    end
   end
 
 end

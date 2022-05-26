@@ -4,4 +4,4 @@ require_relative './lib/read'
 require_relative './lib/operate'
 
 dt = Read.new.read_json_3
-Operate.new(dt).result1
+p Operate.new(dt).price_and_fees
