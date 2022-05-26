@@ -22,16 +22,39 @@ class Operate
 
   def result1
     result = []
-    rentals.each do |rental|
-      used_cars = detect_cars(rental.car_id)
-      price_by_days = used_cars.price_per_day * rental.nb_days
-      total_price = (used_cars.price_per_km * rental.distance + price_by_days)
-      result.push(id: rental.id, price: total_price)
+    rentals.each_with_index do |rental, i|
+      result.push(id: rental.id, price: prices_total[i])
     end
     {rentals: result}
   end
 
+  def prices_total
+    total_price = []
+    rentals.each_with_index do |rental, i|
+      car_var_intermed = detect_cars(rental.car_id)
+      total_price.push(car_var_intermed.price_per_km * rental.distance +  prices_primes[i])
+    end
+    p total_price
+  end
+
   private
+  def prices_primes
+    price_prime = []
+    rentals.each do |rental|
+      fixed_price = (detect_cars(rental.car_id).price_per_day * 200)
+      if rental.nb_days == 1
+        price_prime.push(fixed_price)
+      elsif rental.nb_days < 4 && rental.nb_days > 1
+        price_prime.push(fixed_price * 0.9 * (rental.nb_days - 1) + fixed_price)
+      elsif rental.nb_days < 11 && rental.nb_days > 4
+        price_prime.push(fixed_price * (1 + 0.9 * 3) + fixed_price * 0.7 * (rental.nb_days - 4))
+      elsif rental.nb_days > 10
+        price_prime.push(fixed_price * (1 + 0.9 * 3 + 0.7 * 6 + ((rental.nb_days - 10)* 0.5)))
+      end
+    end
+    price_prime.map {|price| price.round}
+  end
+
   def cars_data
     data['cars'].each do |car|
       cars.push(car_call(car))

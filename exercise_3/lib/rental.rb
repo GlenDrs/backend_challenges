@@ -17,6 +17,18 @@ class Rental
     100 * ((convert_to_date(end_date) - convert_to_date(start_date)).to_i + 1)
   end
 
+  def prices_primes
+    if nb_days == 1
+      nb_days
+    elsif nb_days < 4 && nb_days > 1
+      nb_days + (nb_days -  1) * 0.9
+    elsif nb_days < 11 && nb_days > 4
+      nb_days * (1 + 0.9 * 3) + (nb_days - 4) * 0.7
+    else
+      nb_days * (1 + 0.9 * 3 + 0.7 * 7) +(nb_days - 10) * 0.5
+    end
+  end
+
   def nb_days
     ((convert_to_date(end_date) - convert_to_date(start_date)).to_i + 1)
   end
