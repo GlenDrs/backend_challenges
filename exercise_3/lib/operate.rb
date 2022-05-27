@@ -14,11 +14,11 @@ class Operate
     rentals_data
   end
 
-  def price_and_fees
+  def discount_prices_and_fees
     result = []
     rentals.each do |rental|
       car_var = detect_cars(rental.car_id)
-      price_tot = car_var.price_per_km * rental.distance + rental.prices_primes * (car_var.price_per_day * 200)
+      price_tot = car_var.price_per_km * rental.distance + rental.discounts_days * (car_var.price_per_day * 200)
       result.push(id: rental.id, price: price_tot.round, commission: {
         insurance_fee: (price_tot * 0.15).round,
         assistance_fee: rental.day_fee,
