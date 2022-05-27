@@ -18,7 +18,7 @@ class ReadOperate
     result = []
     rentals.each do |rental|
       car_var = detect_car(rental.car_id)
-      price_discount = car_var.price_per_km * rental.distance + rental.price_discounts * car_var.price_per_day
+      price_discount = car_var.price_per_km * rental.distance + rental.day_discounts * car_var.price_per_day
       result.push(id: rental.id, price: price_discount.round)
     end
     {rentals: result}
