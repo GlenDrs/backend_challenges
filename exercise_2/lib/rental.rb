@@ -13,6 +13,18 @@ class Rental
     validate_inputs_rental
   end
 
+  def price_discounts
+    if nb_days < 2
+      nb_days
+    elsif nb_days > 1 && nb_days < 4
+      1 + (nb_days -  1) * 0.9
+    elsif nb_days < 11 && nb_days > 4
+      (1 +  0.9 * 3) + (nb_days - 4) * 0.7
+    elsif nb_days > 10
+      (1 +  0.9 * 3 + 0.7 * 6) +(nb_days - 10) * 0.5
+    end
+  end
+
   def nb_days
     (convert_to_date(end_date) - convert_to_date(start_date) + 1).to_i
   end

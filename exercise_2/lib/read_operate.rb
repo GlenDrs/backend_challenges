@@ -14,34 +14,17 @@ class ReadOperate
     rentals_data
   end
 
-  def export
+  def prices_with_discount
     result = []
-    km_price = new_car_data.first.price_per_km
-    new_rental.each_with_index do |rental,i|
-      final_price = km_price * rental.distance + adjusted_prices[i].round
-      result.push(id: rental.id, price: final_price)
+    rentals.each do |rental|
+      car_var = detect_car(rental.car_id)
+      price_discount = car_var.price_per_km * rental.distance + rental.price_discounts * car_var.price_per_day
+      result.push(id: rental.id, price: price_discount.round)
     end
     {rentals: result}
   end
 
   private
-  def adjusted_prices
-    total_price = []
-    fixed_price = new_car_data.first.price_per_day
-    new_rental.each do |rental|
-      if rental.nb_days == 1
-        total_price.push(fixed_price)
-      elsif rental.nb_days < 4 && rental.nb_days > 1
-        total_price.push(fixed_price * 0.9 * (rental.nb_days - 1) + fixed_price)
-      elsif rental.nb_days < 11 && rental.nb_days > 4
-        total_price.push(fixed_price * (1 + 0.9 * 3) + fixed_price * 0.7 * (rental.nb_days - 4))
-      elsif rental.nb_days > 10
-        total_price.push(fixed_price * (1 + 0.9 * 3 + 0.7 * 6 + ((rental.nb_days - 10)* 0.5)))
-      end
-    end
-    total_price
-  end
-
   def new_car_data
     cars.each do |car|
       detect_rental(car.id)

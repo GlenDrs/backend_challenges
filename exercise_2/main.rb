@@ -9,7 +9,7 @@ def dt
 end
 
 def execute
-  p ReadOperate.new(dt).export
+  p ReadOperate.new(dt).prices_with_discount
 end
 
 execute
