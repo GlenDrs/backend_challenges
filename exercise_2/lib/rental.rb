@@ -13,7 +13,7 @@ class Rental
     validate_inputs_rental
   end
 
-  def price_discounts
+  def day_discounts
     if nb_days < 2
       nb_days
     elsif nb_days > 1 && nb_days < 4
