@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 require 'json'
-require 'date'
 
 class Read
-  def call
-    read_json_3
+  def read_json_3
+    JSON.parse(File.read file_json)
   end
 
   private
-  def read_json_3
-    JSON.parse(File.read './data/input.json')
+  def file_json
+    './data/input.json'
   end
-
 end
