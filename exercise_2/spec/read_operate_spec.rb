@@ -5,10 +5,10 @@ require_relative '../main'
 RSpec.describe ReadOperate do
   subject(:read) { described_class.new(dt) }
 
-  describe '#export' do
+  describe '#prices_with_discount' do
     it 'ReadOperate return data test' do
-      expect(read.export).to be_a Hash
-      expect(read.export).to include
+      expect(read.prices_with_discount).to be_a Hash
+      expect(read.prices_with_discount).to include
       [{:id=>1, :price=>3000}, {:id=>2, :price=>6800}]
     end
   end
